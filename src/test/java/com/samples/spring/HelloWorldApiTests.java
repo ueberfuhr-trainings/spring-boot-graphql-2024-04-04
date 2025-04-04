@@ -2,6 +2,7 @@ package com.samples.spring;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
@@ -41,5 +42,17 @@ public class HelloWorldApiTests {
     .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_PLAIN))
     .andExpect(content().string("Hello World"));
   }
+  
+  @Test
+  void shouldReturnHelloWorldJson() throws Exception {
+    mvc
+      .perform(
+        get("/hello/json")
+      )
+      .andExpect(status().isOk())
+      .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+      .andExpect(jsonPath("$.message").value("Hello World"));
+  }
+  
   
 }
