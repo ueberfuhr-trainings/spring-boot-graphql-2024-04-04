@@ -2,5 +2,6 @@ target/
 **/.*
 !.gitignore
 !.gitattributes
+!.github
 mvnw
 mvnw.*
