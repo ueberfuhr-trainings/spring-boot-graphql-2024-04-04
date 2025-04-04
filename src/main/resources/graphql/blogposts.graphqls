@@ -1,0 +1,13 @@
+type BlogPost {
+
+  id: ID!
+  title: String!
+  content: String!
+
+}
+
+type Query {
+
+  findAllBlogPosts: [BlogPost]!
+
+}
