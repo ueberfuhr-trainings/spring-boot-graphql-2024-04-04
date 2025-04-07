@@ -9,6 +9,8 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
+import jakarta.validation.Valid;
+
 @Controller
 public class QlBlogPostsController {
 
@@ -66,9 +68,11 @@ public class QlBlogPostsController {
   
   @MutationMapping("createBlogPost")
   public BlogPost createBlogPost(
+    @Valid
     @Argument("input")
     BlogPostInput input
   ) {
+    
     var blogPost = new BlogPost(
         createId(), 
         input.title(), 
