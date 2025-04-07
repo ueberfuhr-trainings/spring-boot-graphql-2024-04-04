@@ -2,6 +2,7 @@ package com.samples.spring;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.UUID;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
@@ -68,12 +69,12 @@ class GraphQlTests {
         .entity(String.class)
         .isEqualTo("Test-Content")
       .path("createBlogPost.id")
-        .entity(Long.class)
+        .entity(String.class)
         .get();
     
     graphQlTester
       .document("""
-              query findBlogPostById($id: ID!) { 
+              query findBlogPostById($id: UUID!) { 
                 findBlogPostById(id: $id) { 
                   title,
                   content
@@ -152,13 +153,13 @@ class GraphQlTests {
       .errors()
         .verify()
       .path("createBlogPost.id")
-        .entity(Long.class)
+        .entity(String.class)
         .get();
     
     // now, delete it (expect true)
     var result = graphQlTester
     .document("""
-        mutation deleteBlogPost($id: ID!) {
+        mutation deleteBlogPost($id: UUID!) {
           deleteBlogPost(id: $id)
         }
         """)
@@ -174,7 +175,7 @@ class GraphQlTests {
     // now, delete it again (expect false)
     var repeatResult = graphQlTester
     .document("""
-        mutation deleteBlogPost($id: ID!) {
+        mutation deleteBlogPost($id: UUID!) {
           deleteBlogPost(id: $id)
         }
         """)
@@ -190,7 +191,7 @@ class GraphQlTests {
     // query the non-existing document
     graphQlTester
       .document("""
-              query findBlogPostById($id: ID!) { 
+              query findBlogPostById($id: UUID!) { 
                 findBlogPostById(id: $id) { 
                   title,
                   content

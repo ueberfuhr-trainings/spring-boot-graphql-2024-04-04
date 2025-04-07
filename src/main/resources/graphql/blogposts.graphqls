@@ -1,6 +1,9 @@
+"""An RFC-4122 standardized universal identifier."""
+scalar UUID
+
 type BlogPost {
 
-  id: ID!
+  id: UUID!
   title: String!
   content: String!
 
@@ -16,13 +19,13 @@ input BlogPostInput {
 type Query {
 
   findAllBlogPosts: [BlogPost]!
-  findBlogPostById(id: ID!): BlogPost
+  findBlogPostById(id: UUID!): BlogPost
 
 }
 
 type Mutation {
 
   createBlogPost(input: BlogPostInput!): BlogPost
-  deleteBlogPost(id: ID!): Boolean!
+  deleteBlogPost(id: UUID!): Boolean!
 
 }

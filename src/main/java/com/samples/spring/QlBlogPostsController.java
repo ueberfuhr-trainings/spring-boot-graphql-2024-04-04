@@ -1,6 +1,7 @@
 package com.samples.spring;
 
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
 
@@ -14,19 +15,10 @@ import jakarta.validation.Valid;
 @Controller
 public class QlBlogPostsController {
 
-  // ID generation
-  // TODO Replace this!
-  
-  private static long counter = 0;
-  
-  private static long createId() {
-    return counter++;
-  }
-
   // BlogPost storage
   // TODO Replace this!
 
-  private final Map<Long, BlogPost> blogPosts = new ConcurrentHashMap<Long, BlogPost>();
+  private final Map<UUID, BlogPost> blogPosts = new ConcurrentHashMap<>();
 
   // BlogPost sample data
   // TODO Replace this!
@@ -59,7 +51,7 @@ public class QlBlogPostsController {
   @QueryMapping("findBlogPostById")
   public BlogPost findBlogPostById(
     @Argument("id")
-    long id
+    UUID id
   ) {
     return this
         .blogPosts
@@ -74,7 +66,7 @@ public class QlBlogPostsController {
   ) {
     
     var blogPost = new BlogPost(
-        createId(), 
+        UUID.randomUUID(), 
         input.title(), 
         input.content()
     );
@@ -87,7 +79,7 @@ public class QlBlogPostsController {
   @MutationMapping("deleteBlogPost")
   public boolean deleteBlogPost(
     @Argument("id")
-    long id
+    UUID id
       ) {
     return this
         .blogPosts

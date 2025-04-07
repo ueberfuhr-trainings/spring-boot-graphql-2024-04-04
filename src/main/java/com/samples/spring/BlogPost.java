@@ -1,8 +1,10 @@
 package com.samples.spring;
 
+import java.util.UUID;
+
 public record BlogPost(
 
-    long id,
+    UUID id,
     String title,
     String content
     
