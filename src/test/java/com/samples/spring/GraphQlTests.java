@@ -14,7 +14,7 @@ public class GraphQlTests {
   GraphQlTester graphQlTester;
   
   @Test
-  void shouldReturnAllBlogPosts() throws Exception {
+  void shouldReturnAllBlogPosts() {
     
     graphQlTester
       .document("""
@@ -27,10 +27,62 @@ public class GraphQlTests {
           """)
       .execute()
       .errors()
-      .verify()
+        .verify()
       .path("findAllBlogPosts")
-      .hasValue();
+        .hasValue();
     
+  }
+  
+  @Test
+  void shouldCreateAndReturnBlogPost() {
+    
+    var newId = graphQlTester
+      .document("""
+          mutation {
+            createBlogPost(input: {
+                title: "Test-Title", 
+                content: "Test-Content"
+            }) {
+              id,
+              title,
+              content
+            }
+          }
+          """)
+      .execute()
+      .errors()
+        .verify()
+      .path("createBlogPost.title")
+        .entity(String.class)
+        .isEqualTo("Test-Title")
+      .path("createBlogPost.content")
+        .entity(String.class)
+        .isEqualTo("Test-Content")
+      .path("createBlogPost.id")
+        .entity(Long.class)
+        .get();
+    
+    graphQlTester
+      .document(
+          String.format("""
+              query { 
+                findBlogPostById(id: "%d") { 
+                  title,
+                  content
+                }
+              }
+              """, newId)
+          )
+      .execute()
+      .errors()
+      .verify()
+      .path("findBlogPostById.title")
+        .entity(String.class)
+        .isEqualTo("Test-Title")
+      .path("findBlogPostById.content")
+        .entity(String.class)
+        .isEqualTo("Test-Content");
+
   }
   
 }
