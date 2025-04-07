@@ -1,0 +1,27 @@
+type BlogPost {
+
+  id: ID!
+  title: String!
+  content: String!
+
+}
+
+input BlogPostInput {
+
+  title: String!
+  content: String!
+
+}
+
+type Query {
+
+  findAllBlogPosts: [BlogPost]!
+  findBlogPostById(id: ID!): BlogPost
+
+}
+
+type Mutation {
+
+  createBlogPost(input: BlogPostInput!): BlogPost!
+
+}
