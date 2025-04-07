@@ -72,15 +72,14 @@ class GraphQlTests {
         .get();
     
     graphQlTester
-      .document(
-          String.format("""
+      .document("""
               query findBlogPostById($id: ID!) { 
                 findBlogPostById(id: $id) { 
                   title,
                   content
                 }
               }
-              """, newId)
+              """
           )
       .variable("id", newId)
       .execute()
@@ -116,9 +115,7 @@ class GraphQlTests {
               title: $title, 
               content: $content
           }) {
-            id,
-            title,
-            content
+            id
           }
         }
         """)
@@ -136,5 +133,78 @@ class GraphQlTests {
     );
   }
   
-  
+  @Test
+  void shouldDeleteAndNotReturnBlogPost() {
+
+    // first, create a blog post
+    var id = graphQlTester
+      .document("""
+          mutation {
+            createBlogPost(input: {
+                title: "Test-Title", 
+                content: "Test-Content"
+            }) {
+              id
+            }
+          }
+          """)
+      .execute()
+      .errors()
+        .verify()
+      .path("createBlogPost.id")
+        .entity(Long.class)
+        .get();
+    
+    // now, delete it (expect true)
+    var result = graphQlTester
+    .document("""
+        mutation deleteBlogPost($id: ID!) {
+          deleteBlogPost(id: $id)
+        }
+        """)
+    .variable("id", id)
+    .execute()
+    .errors()
+      .verify()
+    .path("deleteBlogPost")
+      .entity(Boolean.class)
+      .get();
+    assertThat(result).isTrue();
+
+    // now, delete it again (expect false)
+    var repeatResult = graphQlTester
+    .document("""
+        mutation deleteBlogPost($id: ID!) {
+          deleteBlogPost(id: $id)
+        }
+        """)
+    .variable("id", id)
+    .execute()
+    .errors()
+      .verify()
+    .path("deleteBlogPost")
+      .entity(Boolean.class)
+      .get();
+    assertThat(repeatResult).isFalse();
+
+    // query the non-existing document
+    graphQlTester
+      .document("""
+              query findBlogPostById($id: ID!) { 
+                findBlogPostById(id: $id) { 
+                  title,
+                  content
+                }
+              }
+              """
+          )
+      .variable("id", id)
+      .execute()
+      .errors()
+        .verify()
+      .path("findBlogPostById")
+        .valueIsNull();
+
+  }
+
 }
