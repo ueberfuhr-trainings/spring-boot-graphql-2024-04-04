@@ -65,17 +65,18 @@ public class GraphQlTests {
     graphQlTester
       .document(
           String.format("""
-              query { 
-                findBlogPostById(id: "%d") { 
+              query findBlogPostById($id: ID!) { 
+                findBlogPostById(id: $id) { 
                   title,
                   content
                 }
               }
               """, newId)
           )
+      .variable("id", newId)
       .execute()
       .errors()
-      .verify()
+        .verify()
       .path("findBlogPostById.title")
         .entity(String.class)
         .isEqualTo("Test-Title")
