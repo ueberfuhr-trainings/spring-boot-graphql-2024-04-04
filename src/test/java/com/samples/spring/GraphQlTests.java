@@ -2,11 +2,17 @@ package com.samples.spring;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.assertj.core.api.Assertions;
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.graphql.tester.AutoConfigureGraphQlTester;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.graphql.ResponseError;
+import org.springframework.graphql.execution.ErrorType;
 import org.springframework.graphql.test.tester.GraphQlTester;
 
 @SpringBootTest
@@ -89,14 +95,26 @@ class GraphQlTests {
 
   }
   
-  @Test // TODO Parameterized
-  void shouldNotCreateInvalidBlogPost() {
+  
+  private static Stream<Arguments> provideInvalidBlogPostInputs() {
+    return Stream.of(
+      Arguments.of("", "Test"),
+      Arguments.of("T", "Test"),
+      Arguments.of("Test", ""),
+      Arguments.of("T".repeat(101), "Test"),
+      Arguments.of("Test", "T".repeat(1001))
+    );
+}
+  
+  @ParameterizedTest
+  @MethodSource("provideInvalidBlogPostInputs")
+  void shouldNotCreateInvalidBlogPost(String title, String content) {
     graphQlTester
     .document("""
-        mutation {
+        mutation createBlogPost($title: String!, $content: String!) {
           createBlogPost(input: {
-              title: "T", 
-              content: "Test-Content"
+              title: $title, 
+              content: $content
           }) {
             id,
             title,
@@ -104,8 +122,18 @@ class GraphQlTests {
           }
         }
         """)
+    .variable("title", title)
+    .variable("content", content)
     .execute()
-    .errors().satisfy(errors -> assertThat(errors).isNotEmpty());
+    .errors().satisfy(errors -> 
+      assertThat(errors)
+        .isNotEmpty()
+        .hasSize(1)
+        .first()
+        .extracting(ResponseError::getErrorType)
+        .isEqualTo(ErrorType.BAD_REQUEST)
+        
+    );
   }
   
   

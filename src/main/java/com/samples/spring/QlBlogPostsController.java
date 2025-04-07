@@ -73,9 +73,6 @@ public class QlBlogPostsController {
     BlogPostInput input
   ) {
     
-    // Validierung: title >3 <=100, content >3 <=1000, title<content
-    
-    
     var blogPost = new BlogPost(
         createId(), 
         input.title(), 

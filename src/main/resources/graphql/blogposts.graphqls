@@ -22,6 +22,6 @@ type Query {
 
 type Mutation {
 
-  createBlogPost(input: BlogPostInput!): BlogPost!
+  createBlogPost(input: BlogPostInput!): BlogPost
 
 }
