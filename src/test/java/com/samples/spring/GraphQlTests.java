@@ -1,5 +1,8 @@
 package com.samples.spring;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.graphql.tester.AutoConfigureGraphQlTester;
@@ -85,5 +88,25 @@ class GraphQlTests {
         .isEqualTo("Test-Content");
 
   }
+  
+  @Test // TODO Parameterized
+  void shouldNotCreateInvalidBlogPost() {
+    graphQlTester
+    .document("""
+        mutation {
+          createBlogPost(input: {
+              title: "T", 
+              content: "Test-Content"
+          }) {
+            id,
+            title,
+            content
+          }
+        }
+        """)
+    .execute()
+    .errors().satisfy(errors -> assertThat(errors).isNotEmpty());
+  }
+  
   
 }
