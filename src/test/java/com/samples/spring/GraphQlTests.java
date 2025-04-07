@@ -20,6 +20,12 @@ import org.springframework.graphql.test.tester.GraphQlTester;
 @AutoConfigureGraphQlTester
 class GraphQlTests {
 
+  private static final String ISO8601_REGEX 
+    = "^\\d{4}-\\d{2}-\\d{2}" +  // Date: YYYY-MM-DD
+      "T\\d{2}:\\d{2}:\\d{2}" +  // Time: THH:mm:ss
+      "(\\.\\d{1,9})?" +         // Optional: .SSS... (fractional seconds)
+      "(Z|[+-]\\d{2}:\\d{2})?$"; 
+  
   @Autowired
   GraphQlTester graphQlTester;
   
@@ -55,7 +61,8 @@ class GraphQlTests {
             }) {
               id,
               title,
-              content
+              content,
+              created
             }
           }
           """)
@@ -68,6 +75,9 @@ class GraphQlTests {
       .path("createBlogPost.content")
         .entity(String.class)
         .isEqualTo("Test-Content")
+        .path("createBlogPost.created")
+        .entity(String.class)
+        .matches(field -> field.matches(ISO8601_REGEX))
       .path("createBlogPost.id")
         .entity(String.class)
         .get();
