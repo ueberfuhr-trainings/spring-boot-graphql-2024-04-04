@@ -1,5 +1,6 @@
 package com.samples.spring;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -68,7 +69,8 @@ public class QlBlogPostsController {
     var blogPost = new BlogPost(
         UUID.randomUUID(), 
         input.title(), 
-        input.content()
+        input.content(),
+        LocalDateTime.now()
     );
     this
       .blogPosts

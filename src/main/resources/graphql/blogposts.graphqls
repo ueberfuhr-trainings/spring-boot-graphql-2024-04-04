@@ -1,11 +1,14 @@
 """An RFC-4122 standardized universal identifier."""
 scalar UUID
+"""An ISO-8601 encoded UTC date string."""
+scalar DateTime
 
 type BlogPost {
 
   id: UUID!
   title: String!
   content: String!
+  created: DateTime!
 
 }
 
