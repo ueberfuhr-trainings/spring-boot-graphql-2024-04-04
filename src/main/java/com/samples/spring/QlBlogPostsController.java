@@ -84,5 +84,15 @@ public class QlBlogPostsController {
     return blogPost;
   }
   
+  @MutationMapping("deleteBlogPost")
+  public boolean deleteBlogPost(
+    @Argument("id")
+    long id
+      ) {
+    return this
+        .blogPosts
+        .remove(id) != null;
+  }
+  
   
 }

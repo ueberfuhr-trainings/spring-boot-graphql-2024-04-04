@@ -23,5 +23,6 @@ type Query {
 type Mutation {
 
   createBlogPost(input: BlogPostInput!): BlogPost
+  deleteBlogPost(id: ID!): Boolean!
 
 }
