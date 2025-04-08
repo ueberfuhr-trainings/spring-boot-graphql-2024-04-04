@@ -13,7 +13,6 @@ import jakarta.validation.Valid;
 @Controller
 public class QlBlogPostsController {
 
-  
   private final BlogPostsService service;
   
   public QlBlogPostsController(BlogPostsService service) {
