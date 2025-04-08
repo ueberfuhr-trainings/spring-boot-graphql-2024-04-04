@@ -3,6 +3,11 @@ scalar UUID
 """An ISO-8601 encoded UTC date string."""
 scalar DateTime
 
+# Validation constraints: https://www.npmjs.com/package/graphql-constraint-directive
+# https://github.com/polovyivan/spring-graphql-directives/blob/main/src/main/resources/graphql/query.graphqls
+"""A constraint to the length of a string, array or collection."""
+directive @Size(min : Int = 0, max : Int = 2147483647) on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION | FIELD_DEFINITION
+
 type BlogPost {
 
   id: UUID!
@@ -14,8 +19,8 @@ type BlogPost {
 
 input BlogPostInput {
 
-  title: String!
-  content: String!
+  title: String! @Size(min: 4, max: 100)
+  content: String! @Size(min: 4, max: 1000)
 
 }
 
