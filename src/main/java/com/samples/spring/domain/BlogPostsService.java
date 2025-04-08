@@ -1,4 +1,4 @@
-package com.samples.spring;
+package com.samples.spring.domain;
 
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -26,17 +26,17 @@ public class BlogPostsService {
 
   {
     create(
-      new BlogPostInput(
+      BlogPost.valueOf(
         "My First BlogPost", 
         "This is my first blog post."
       )
     );
     create(
-        new BlogPostInput(
-          "My Second BlogPost", 
-          "This is my second blog post."
-        )
-      );
+      BlogPost.valueOf(
+        "My Second BlogPost", 
+        "This is my second blog post."
+      )
+    );
   }
   
   public Stream<BlogPost> findAll() {
@@ -54,17 +54,12 @@ public class BlogPostsService {
       );
   }
   
-  public BlogPost create(@Valid BlogPostInput newPost) {
-    var blogPost = new BlogPost(
-        UUID.randomUUID(), 
-        newPost.title(), 
-        newPost.content(),
-        LocalDateTime.now()
-    );
+  public void create(@Valid BlogPost newPost) {
+    newPost.setId(UUID.randomUUID());
+    newPost.setCreated(LocalDateTime.now());
     this
       .blogPosts
-      .put(blogPost.id(), blogPost);
-    return blogPost;
+      .put(newPost.getId(), newPost);
   }
   
   public boolean delete(UUID id) {

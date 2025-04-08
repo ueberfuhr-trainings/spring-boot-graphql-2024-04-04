@@ -1,4 +1,4 @@
-package com.samples.spring;
+package com.samples.spring.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -17,19 +17,19 @@ public class BlogPostsServiceTests {
   
   @Test
   void shouldCreateBlogPost() {
-    var input = new BlogPostInput("Test", "Test-Content");
-    var post = service.create(input);
-    assertThat(post.id())
+    var post = BlogPost.valueOf("Test", "Test-Content");
+    service.create(post);
+    assertThat(post.getId())
       .isNotNull();
-    var findResult = service.findById(post.id());
+    var findResult = service.findById(post.getId());
     assertThat(findResult)
       .isPresent();
   }
   
   @Test
   void shouldValidateBlogPost() {
-    var input = new BlogPostInput("T", "Test-Content");
-    assertThatThrownBy(() -> service.create(input))
+    var post = BlogPost.valueOf("T", "Test-Content");
+    assertThatThrownBy(() -> service.create(post))
       .isInstanceOf(ValidationException.class);
   }
   

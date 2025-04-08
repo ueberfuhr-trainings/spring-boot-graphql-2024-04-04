@@ -1,4 +1,4 @@
-package com.samples.spring;
+package com.samples.spring.boundary;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;

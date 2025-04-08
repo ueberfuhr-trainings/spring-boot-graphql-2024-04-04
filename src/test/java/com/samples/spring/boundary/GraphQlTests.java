@@ -1,4 +1,4 @@
-package com.samples.spring;
+package com.samples.spring.boundary;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

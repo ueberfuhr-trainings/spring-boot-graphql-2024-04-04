@@ -1,4 +1,4 @@
-package com.samples.spring;
+package com.samples.spring.boundary;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -16,6 +16,8 @@ import org.springframework.graphql.ResponseError;
 import org.springframework.graphql.execution.ErrorType;
 import org.springframework.graphql.test.tester.GraphQlTester;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
+
+import com.samples.spring.domain.BlogPostsService;
 
 @SpringBootTest
 @AutoConfigureGraphQlTester
