@@ -10,18 +10,15 @@ import org.springframework.validation.annotation.Validated;
 import com.samples.spring.shared.events.PublishEvent;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @Validated
 @Service
+@RequiredArgsConstructor
 public class AuthorsService {
   
   private final AuthorsSink sink;
   
-  public AuthorsService(AuthorsSink sink) {
-    super();
-    this.sink = sink;
-  }
-
   public Stream<Author> findAll() {
     return sink.findAll();
   }

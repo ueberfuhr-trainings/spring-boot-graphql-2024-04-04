@@ -8,6 +8,9 @@ import com.samples.spring.domain.BlogPost;
 import com.samples.spring.domain.BlogPostOptions;
 import com.samples.spring.domain.BlogPostsSink;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 class JpaBlogPostsSink
   implements BlogPostsSink {
 
@@ -15,17 +18,6 @@ class JpaBlogPostsSink
   private final BlogPostEntityMapper mapper;
   private final JpaEntityGraphQueryBuilder queryBuilder;
   
-  public JpaBlogPostsSink(
-      BlogPostEntityRepository repo, 
-      BlogPostEntityMapper mapper,
-      JpaEntityGraphQueryBuilder queryBuilder
-  ) {
-    super();
-    this.repo = repo;
-    this.mapper = mapper;
-    this.queryBuilder = queryBuilder;
-  }
-
   @Override
   public Stream<BlogPost> findAll(BlogPostOptions options) {
     // We build the EntityGraph dynamically here,

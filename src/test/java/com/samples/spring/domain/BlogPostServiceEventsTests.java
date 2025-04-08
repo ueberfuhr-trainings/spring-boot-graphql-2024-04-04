@@ -28,9 +28,11 @@ class BlogPostServiceEventsTests {
   
   @Test
   void shouldLogOnBlogPostCreated() {
-    var blogPost = new BlogPost();
-    blogPost.setTitle("Test-Title");
-    blogPost.setContent("Test-Content");
+    var blogPost = BlogPost
+        .builder()
+        .title("Test-Title")
+        .content("Test-Content")
+        .build();
     service.create(blogPost);
     
     // Prüfe, ob Event ausgelöst wurde
@@ -42,9 +44,11 @@ class BlogPostServiceEventsTests {
 
   @Test
   void shouldLogOnBlogPostDeleted() {
-    var blogPost = new BlogPost();
-    blogPost.setTitle("Test-Title");
-    blogPost.setContent("Test-Content");
+    var blogPost = BlogPost
+        .builder()
+        .title("Test-Title")
+        .content("Test-Content")
+        .build();
     service.create(blogPost);
     
     service.delete(blogPost.getId());

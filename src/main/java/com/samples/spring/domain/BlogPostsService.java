@@ -10,20 +10,17 @@ import org.springframework.validation.annotation.Validated;
 import com.samples.spring.shared.events.PublishEvent;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @Validated
 @Service
+@RequiredArgsConstructor
 public class BlogPostsService {
 
   private final BlogPostsSink sink;
   
-  public BlogPostsService(BlogPostsSink sink) {
-    super();
-    this.sink = sink;
-  }
-
   public Stream<BlogPost> findAll() {
-    return this.findAll(new BlogPostOptions());
+    return this.findAll(BlogPostOptions.builder().build());
   }
 
   public Stream<BlogPost> findAll(BlogPostOptions options) {

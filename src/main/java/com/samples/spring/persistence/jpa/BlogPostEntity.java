@@ -13,7 +13,11 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Table(name = "BLOGPOSTS")
 @Entity(name = "BlogPost") // für JPQL
 public class BlogPostEntity {
@@ -38,36 +42,5 @@ public class BlogPostEntity {
       created = ZonedDateTime.now();
     }
   }
-  
-  public UUID getId() {
-    return id;
-  }
-  public void setId(UUID id) {
-    this.id = id;
-  }
-  public String getTitle() {
-    return title;
-  }
-  public void setTitle(String title) {
-    this.title = title;
-  }
-  public String getContent() {
-    return content;
-  }
-  public void setContent(String content) {
-    this.content = content;
-  }
-  public ZonedDateTime getCreated() {
-    return created;
-  }
-  public void setCreated(ZonedDateTime created) {
-    this.created = created;
-  }
-  public AuthorEntity getAuthor() {
-    return author;
-  }
-  public void setAuthor(AuthorEntity author) {
-    this.author = author;
-  }
-  
+
 }

@@ -19,7 +19,11 @@ public class BlogPostsServiceTests {
   
   @Test
   void shouldCreateBlogPost() {
-    var post = BlogPost.valueOf("Test", "Test-Content");
+    var post = BlogPost
+        .builder()
+        .title("Test")
+        .content("Test-Content")
+        .build();
     service.create(post);
     assertThat(post.getId())
       .isNotNull();
@@ -30,7 +34,11 @@ public class BlogPostsServiceTests {
   
   @Test
   void shouldValidateBlogPost() {
-    var post = BlogPost.valueOf("T", "Test-Content");
+    var post = BlogPost
+        .builder()
+        .title("T")
+        .content("Test-Content")
+        .build();
     assertThatThrownBy(() -> service.create(post))
       .isInstanceOf(ValidationException.class);
   }

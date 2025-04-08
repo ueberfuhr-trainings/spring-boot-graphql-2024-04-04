@@ -8,7 +8,9 @@ import com.samples.spring.domain.AuthorsService;
 import com.samples.spring.domain.BlogPostsService;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @Controller
 public class QlAuthorBlogPostAssignmentController {
 
@@ -18,17 +20,6 @@ public class QlAuthorBlogPostAssignmentController {
   private final AuthorsService authorsService;
   private final QlBlogPostDtoMapper mapper;
   
-  public QlAuthorBlogPostAssignmentController(
-      BlogPostsService blogPostsService, 
-      AuthorsService authorsService,
-      QlBlogPostDtoMapper mapper
-  ) {
-    super();
-    this.blogPostsService = blogPostsService;
-    this.authorsService = authorsService;
-    this.mapper = mapper;
-  }
-
   @MutationMapping("assignAuthorToBlogPost")
   public QlBlogPostDto assignAuthorToBlogPost(
       @Valid
