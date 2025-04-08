@@ -1,4 +1,4 @@
-package com.samples.spring;
+package com.samples.spring.boundary;
 
 import graphql.GraphQLError;
 import graphql.validation.interpolation.MessageInterpolator;

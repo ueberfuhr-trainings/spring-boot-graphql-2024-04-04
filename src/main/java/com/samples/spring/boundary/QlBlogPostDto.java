@@ -1,9 +1,9 @@
-package com.samples.spring;
+package com.samples.spring.boundary;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public record BlogPost(
+public record QlBlogPostDto(
 
     UUID id,
     String title,

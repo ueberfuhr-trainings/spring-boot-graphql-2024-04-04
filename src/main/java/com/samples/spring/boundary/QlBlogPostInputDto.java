@@ -1,9 +1,9 @@
-package com.samples.spring;
+package com.samples.spring.boundary;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public record BlogPostInput(
+public record QlBlogPostInputDto(
 
     @NotNull
     @Size(min = 4, max = 100)

@@ -1,4 +1,4 @@
-package com.samples.spring;
+package com.samples.spring.boundary;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
