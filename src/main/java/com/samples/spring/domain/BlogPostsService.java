@@ -68,5 +68,11 @@ public class BlogPostsService {
         .remove(id) != null;
   }
   
+  public long count() {
+    return this
+        .blogPosts
+        .size();
+  }
+  
   
 }
