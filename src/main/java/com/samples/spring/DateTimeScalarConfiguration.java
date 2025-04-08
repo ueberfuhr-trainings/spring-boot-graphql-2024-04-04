@@ -1,17 +1,22 @@
 package com.samples.spring;
 
-import graphql.GraphQLContext;
-import graphql.execution.CoercedVariables;
-import graphql.language.StringValue;
-import graphql.language.Value;
-import graphql.schema.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
+import java.util.Locale;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.graphql.execution.RuntimeWiringConfigurer;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeParseException;
-import java.util.Locale;
+import graphql.GraphQLContext;
+import graphql.execution.CoercedVariables;
+import graphql.language.StringValue;
+import graphql.language.Value;
+import graphql.schema.Coercing;
+import graphql.schema.CoercingParseLiteralException;
+import graphql.schema.CoercingParseValueException;
+import graphql.schema.CoercingSerializeException;
+import graphql.schema.GraphQLScalarType;
 
 @Configuration
 public class DateTimeScalarConfiguration {
@@ -31,7 +36,6 @@ public class DateTimeScalarConfiguration {
 
   private static class DateTimeScalar implements Coercing<LocalDateTime, String> {
 
-    @SuppressWarnings("NullableProblems")
     @Override
     public String serialize(
       Object dataFetcherResult,
@@ -45,7 +49,6 @@ public class DateTimeScalarConfiguration {
       }
     }
 
-    @SuppressWarnings("NullableProblems")
     @Override
     public LocalDateTime parseValue(
       Object input,
@@ -63,7 +66,6 @@ public class DateTimeScalarConfiguration {
       }
     }
 
-    @SuppressWarnings("NullableProblems")
     @Override
     public LocalDateTime parseLiteral(
       Value<?> input,

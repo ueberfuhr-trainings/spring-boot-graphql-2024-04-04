@@ -5,3 +5,7 @@
 
 ## Testen
 ![Testen](02-testen.png)
+
+## Validierung
+... in allen Schichten:
+![Validierung](03-validierung.png)
