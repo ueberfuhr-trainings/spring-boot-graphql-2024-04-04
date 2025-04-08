@@ -11,7 +11,9 @@ public class BlogPostInitializationTests {
 
   @Autowired
   BlogPostsService service;
-  
+
+  // TODO: works also after running the other tests manipulating the service
+  // will work correctly when we use a database
   @Test
   void shouldNotBeEmpty() {
     assertThat(service.count())

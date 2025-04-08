@@ -21,24 +21,6 @@ public class BlogPostsService {
 
   private final Map<UUID, BlogPost> blogPosts = new ConcurrentHashMap<>();
 
-  // BlogPost sample data
-  // TODO Replace this!
-
-  {
-    create(
-      BlogPost.valueOf(
-        "My First BlogPost", 
-        "This is my first blog post."
-      )
-    );
-    create(
-      BlogPost.valueOf(
-        "My Second BlogPost", 
-        "This is my second blog post."
-      )
-    );
-  }
-  
   public Stream<BlogPost> findAll() {
     return this
         .blogPosts
