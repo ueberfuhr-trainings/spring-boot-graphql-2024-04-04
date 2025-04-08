@@ -1,6 +1,6 @@
 package com.samples.spring.domain;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 import jakarta.validation.constraints.NotNull;
@@ -15,7 +15,7 @@ public class BlogPost {
   @NotNull
   @Size(min = 4, max = 1000)
   private String content;
-  private LocalDateTime created;
+  private ZonedDateTime created;
 
   public static BlogPost valueOf(String title, String content) {
     var result = new BlogPost();
@@ -42,10 +42,10 @@ public class BlogPost {
   public void setContent(String content) {
     this.content = content;
   }
-  public LocalDateTime getCreated() {
+  public ZonedDateTime getCreated() {
     return created;
   }
-  public void setCreated(LocalDateTime created) {
+  public void setCreated(ZonedDateTime created) {
     this.created = created;
   }
   

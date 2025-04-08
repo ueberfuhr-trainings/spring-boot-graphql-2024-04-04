@@ -1,6 +1,6 @@
 package com.samples.spring.domain;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -56,7 +56,7 @@ public class BlogPostsService {
   
   public void create(@Valid BlogPost newPost) {
     newPost.setId(UUID.randomUUID());
-    newPost.setCreated(LocalDateTime.now());
+    newPost.setCreated(ZonedDateTime.now());
     this
       .blogPosts
       .put(newPost.getId(), newPost);
