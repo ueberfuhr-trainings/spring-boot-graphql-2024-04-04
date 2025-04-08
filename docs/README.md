@@ -9,3 +9,7 @@
 ## Validierung
 ... in allen Schichten:
 ![Validierung](03-validierung.png)
+
+
+## Dependency Injection
+![Dependency Injection](04-dependency-injection.png)

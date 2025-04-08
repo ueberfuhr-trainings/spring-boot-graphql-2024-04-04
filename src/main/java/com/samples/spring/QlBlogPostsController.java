@@ -1,9 +1,6 @@
 package com.samples.spring;
 
-import java.time.LocalDateTime;
-import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
 
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -16,37 +13,18 @@ import jakarta.validation.Valid;
 @Controller
 public class QlBlogPostsController {
 
-  // BlogPost storage
-  // TODO Replace this!
-
-  private final Map<UUID, BlogPost> blogPosts = new ConcurrentHashMap<>();
-
-  // BlogPost sample data
-  // TODO Replace this!
-
-  {
-    createBlogPost(
-      new BlogPostInput(
-        "My First BlogPost", 
-        "This is my first blog post."
-      )
-    );
-    createBlogPost(
-        new BlogPostInput(
-          "My Second BlogPost", 
-          "This is my second blog post."
-        )
-      );
-  }
+  private final BlogPostsService service;
   
+  public QlBlogPostsController(BlogPostsService service) {
+    super();
+    this.service = service;
+  }
+
   // GraphQl implementation
   
   @QueryMapping("findAllBlogPosts")
   public Stream<BlogPost> findAllBlogPosts() {
-      return this
-          .blogPosts
-          .values()
-          .stream();
+      return service.findAll();
   }
   
   @QueryMapping("findBlogPostById")
@@ -54,9 +32,9 @@ public class QlBlogPostsController {
     @Argument("id")
     UUID id
   ) {
-    return this
-        .blogPosts
-        .get(id);
+    return service
+        .findById(id)
+        .orElse(null);
   }
   
   @MutationMapping("createBlogPost")
@@ -65,17 +43,7 @@ public class QlBlogPostsController {
     @Argument("input")
     BlogPostInput input
   ) {
-    
-    var blogPost = new BlogPost(
-        UUID.randomUUID(), 
-        input.title(), 
-        input.content(),
-        LocalDateTime.now()
-    );
-    this
-      .blogPosts
-      .put(blogPost.id(), blogPost);
-    return blogPost;
+    return service.create(input);
   }
   
   @MutationMapping("deleteBlogPost")
@@ -83,9 +51,7 @@ public class QlBlogPostsController {
     @Argument("id")
     UUID id
       ) {
-    return this
-        .blogPosts
-        .remove(id) != null;
+    return service.delete(id);
   }
   
   
