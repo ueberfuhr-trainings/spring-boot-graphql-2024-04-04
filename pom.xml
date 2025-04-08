@@ -17,6 +17,7 @@
 	<properties>
 		<java.version>21</java.version>
 	    <graphql-java-extended-validation.version>22.0</graphql-java-extended-validation.version>
+		<mapstruct.version>1.6.3</mapstruct.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -40,6 +41,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
+		<dependency>
+	        <groupId>org.mapstruct</groupId>
+    	    <artifactId>mapstruct</artifactId>
+        	<version>${mapstruct.version}</version>
+        	<optional>true</optional>
+    	</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -60,6 +67,22 @@
 	</dependencies>
 
 	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<annotationProcessorPaths>
+    		                <path>
+            		            <groupId>org.mapstruct</groupId>
+                    		    <artifactId>mapstruct-processor</artifactId>
+                        		<version>${mapstruct.version}</version>
+                    		</path>
+		                </annotationProcessorPaths>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
