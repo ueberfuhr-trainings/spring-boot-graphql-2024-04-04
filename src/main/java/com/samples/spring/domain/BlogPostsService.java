@@ -49,13 +49,19 @@ public class BlogPostsService {
     this
       .blogPosts
       .put(newPost.getId(), newPost);
-    eventPublisher.publishEvent(new BlogPostCreatedEvent(newPost));
+    eventPublisher
+      .publishEvent(new BlogPostCreatedEvent(newPost));
   }
   
   public boolean delete(UUID id) {
-    return this
+    final var success = this
         .blogPosts
         .remove(id) != null;
+    if(success) {
+      eventPublisher
+        .publishEvent(new BlogPostDeletedEvent(id));
+    }
+    return success;
   }
   
   public long count() {
