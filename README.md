@@ -13,3 +13,11 @@ mvn spring-boot:run
 mvn clean package
 java -jar target/spring-sample-0.0.1-SNAPSHOT.jar
 ```
+
+## GraphiQL
+
+To enable GraphiQL UI for our application, we need to do one of the following configurations:
+
+- Specify an environment variable `GRAPHIQL_ENABLED` with a value of `true`
+- Run the application with `-Dspring.graphql.graphiql.enabled` with a value of `true`
+- Run the application with `-Dspring.profiles.active=local` (for local environments)
