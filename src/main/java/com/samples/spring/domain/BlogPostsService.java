@@ -7,6 +7,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
 
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -20,6 +21,12 @@ public class BlogPostsService {
   // TODO Replace this!
 
   private final Map<UUID, BlogPost> blogPosts = new ConcurrentHashMap<>();
+  private final ApplicationEventPublisher eventPublisher;
+  
+  public BlogPostsService(ApplicationEventPublisher eventPublisher) {
+    super();
+    this.eventPublisher = eventPublisher;
+  }
 
   public Stream<BlogPost> findAll() {
     return this
@@ -42,12 +49,19 @@ public class BlogPostsService {
     this
       .blogPosts
       .put(newPost.getId(), newPost);
+    eventPublisher
+      .publishEvent(new BlogPostCreatedEvent(newPost));
   }
   
   public boolean delete(UUID id) {
-    return this
+    final var success = this
         .blogPosts
         .remove(id) != null;
+    if(success) {
+      eventPublisher
+        .publishEvent(new BlogPostDeletedEvent(id));
+    }
+    return success;
   }
   
   public long count() {
