@@ -1,10 +1,7 @@
 package com.samples.spring.domain;
 
-import java.time.ZonedDateTime;
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
 
 import org.springframework.context.ApplicationEventPublisher;
@@ -17,46 +14,31 @@ import jakarta.validation.Valid;
 @Service
 public class BlogPostsService {
 
-  // BlogPost storage
-  // TODO Replace this!
-
-  private final Map<UUID, BlogPost> blogPosts = new ConcurrentHashMap<>();
   private final ApplicationEventPublisher eventPublisher;
+  private final BlogPostsSink sink;
   
-  public BlogPostsService(ApplicationEventPublisher eventPublisher) {
+  public BlogPostsService(ApplicationEventPublisher eventPublisher, BlogPostsSink sink, BlogPostsSink inMemoryBlogPostsSink) {
     super();
     this.eventPublisher = eventPublisher;
+    this.sink = sink;
   }
 
   public Stream<BlogPost> findAll() {
-    return this
-        .blogPosts
-        .values()
-        .stream();
+    return sink.findAll();
   }
   
   public Optional<BlogPost> findById(UUID id) {
-    return Optional.ofNullable(
-        this
-          .blogPosts
-          .get(id)
-      );
+    return sink.findById(id);
   }
   
   public void create(@Valid BlogPost newPost) {
-    newPost.setId(UUID.randomUUID());
-    newPost.setCreated(ZonedDateTime.now());
-    this
-      .blogPosts
-      .put(newPost.getId(), newPost);
+    sink.create(newPost);
     eventPublisher
       .publishEvent(new BlogPostCreatedEvent(newPost));
   }
   
   public boolean delete(UUID id) {
-    final var success = this
-        .blogPosts
-        .remove(id) != null;
+    final var success = sink.delete(id);
     if(success) {
       eventPublisher
         .publishEvent(new BlogPostDeletedEvent(id));
@@ -65,9 +47,7 @@ public class BlogPostsService {
   }
   
   public long count() {
-    return this
-        .blogPosts
-        .size();
+    return sink.count();
   }
   
   
