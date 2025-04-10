@@ -34,11 +34,11 @@ public class BlogPostsService {
   
   public boolean delete(UUID id) {
     return sink.delete(id);
+
   }
   
   public long count() {
     return sink.count();
   }
-  
   
 }
