@@ -64,7 +64,11 @@ public class QlBlogPostsController {
     @Argument("id")
     UUID id
       ) {
-    return service.delete(id);
+    if(!service.exists(id)) {
+      return false;
+    }
+    service.delete(id);
+    return true;
   }
   
   

@@ -32,7 +32,7 @@ public class GraphQlWithMockedServiceTests {
   void shouldReturnTrueOnSuccessfulDelete() {
     var id = UUID.randomUUID();
     
-    when(service.delete(id))
+    when(service.exists(id))
       .thenReturn(true);
     
     var result = graphQlTester
