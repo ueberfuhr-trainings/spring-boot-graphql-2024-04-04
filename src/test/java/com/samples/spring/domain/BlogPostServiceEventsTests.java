@@ -1,6 +1,7 @@
 package com.samples.spring.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -53,7 +54,8 @@ class BlogPostServiceEventsTests {
     events.clear();
 
     // Erneutes Löschen
-    service.delete(blogPost.getId());
+    assertThatThrownBy(() -> service.delete(blogPost.getId()))
+      .isNotNull();
     // Prüfe, das Event NICHT ausgelöst wurde
     assertThat(events.stream(BlogPostDeletedEvent.class))
       .filteredOn(event -> event.id().equals(blogPost.getId()))

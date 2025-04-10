@@ -22,4 +22,9 @@ public interface BlogPostsSink {
     return findAll()
         .count();
   }
+
+  default boolean existsById(UUID id) {
+    return findById(id)
+        .isPresent();
+  }
 }

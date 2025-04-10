@@ -54,7 +54,12 @@ class InMemoryBlogPostsSink
         .blogPosts
         .size();
   }
-  
-  
+
+  @Override
+  public boolean existsById(UUID id) {
+    return this
+        .blogPosts
+        .containsKey(id);
+  }
   
 }

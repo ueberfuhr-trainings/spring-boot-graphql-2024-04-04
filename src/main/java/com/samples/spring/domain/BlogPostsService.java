@@ -7,6 +7,8 @@ import java.util.stream.Stream;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import com.samples.spring.shared.events.PublishEvent;
+
 import jakarta.validation.Valid;
 
 @Validated
@@ -28,13 +30,20 @@ public class BlogPostsService {
     return sink.findById(id);
   }
 
+  @PublishEvent(BlogPostCreatedEvent.class)
   public void create(@Valid BlogPost newPost) {
     sink.create(newPost);
   }
-  
-  public boolean delete(UUID id) {
-    return sink.delete(id);
 
+  public boolean exists(UUID id) {
+    return sink.existsById(id);
+  }
+
+  @PublishEvent(BlogPostDeletedEvent.class)
+  public void delete(UUID id) {
+    if(!sink.delete(id)) {
+      throw new BlogPostNotFoundException(id);
+    }
   }
   
   public long count() {
