@@ -4,7 +4,6 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Stream;
 
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -14,12 +13,10 @@ import jakarta.validation.Valid;
 @Service
 public class BlogPostsService {
 
-  private final ApplicationEventPublisher eventPublisher;
   private final BlogPostsSink sink;
   
-  public BlogPostsService(ApplicationEventPublisher eventPublisher, BlogPostsSink sink, BlogPostsSink inMemoryBlogPostsSink) {
+  public BlogPostsService(BlogPostsSink sink) {
     super();
-    this.eventPublisher = eventPublisher;
     this.sink = sink;
   }
 
@@ -30,20 +27,13 @@ public class BlogPostsService {
   public Optional<BlogPost> findById(UUID id) {
     return sink.findById(id);
   }
-  
+
   public void create(@Valid BlogPost newPost) {
     sink.create(newPost);
-    eventPublisher
-      .publishEvent(new BlogPostCreatedEvent(newPost));
   }
   
   public boolean delete(UUID id) {
-    final var success = sink.delete(id);
-    if(success) {
-      eventPublisher
-        .publishEvent(new BlogPostDeletedEvent(id));
-    }
-    return success;
+    return sink.delete(id);
   }
   
   public long count() {
