@@ -1,11 +1,9 @@
 server:
-  port: 8081
+  port: ${SERVER_PORT:8081}
 spring:
   graphql:
     graphiql:
-      enabled: true
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
+      enabled: ${GRAPHIQL_ENABLED:false}
+application:
+  initialization:
+    enabled: true
