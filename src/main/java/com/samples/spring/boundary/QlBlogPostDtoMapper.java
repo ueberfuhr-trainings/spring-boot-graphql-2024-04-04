@@ -17,6 +17,7 @@ public interface QlBlogPostDtoMapper {
 
   @Mapping(target = "id", ignore = true)
   @Mapping(target = "created", ignore = true)
+  @Mapping(target = "author", ignore = true)
   BlogPost map(QlBlogPostInputDto source);
 
 }
