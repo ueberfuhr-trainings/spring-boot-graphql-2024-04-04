@@ -8,6 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
 
 import com.samples.spring.domain.BlogPost;
+import com.samples.spring.domain.BlogPostOptions;
 import com.samples.spring.domain.BlogPostsSink;
 
 class InMemoryBlogPostsSink
@@ -16,7 +17,7 @@ class InMemoryBlogPostsSink
   private final Map<UUID, BlogPost> blogPosts = new ConcurrentHashMap<>();
 
   @Override
-  public Stream<BlogPost> findAll() {
+  public Stream<BlogPost> findAll(BlogPostOptions options) {
     return this
         .blogPosts
         .values()

@@ -8,8 +8,10 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
+import com.samples.spring.domain.BlogPostOptions;
 import com.samples.spring.domain.BlogPostsService;
 
+import graphql.schema.DataFetchingEnvironment;
 import jakarta.validation.Valid;
 
 @Controller
@@ -30,10 +32,15 @@ public class QlBlogPostsController {
   // GraphQl implementation
   
   @QueryMapping("findAllBlogPosts")
-  public Stream<QlBlogPostDto> findAllBlogPosts() {
-      return service
-          .findAll()
-          .map(mapper::map);
+  public Stream<QlBlogPostDto> findAllBlogPosts(DataFetchingEnvironment env) {
+    var authorRequested = env
+        .getSelectionSet()
+        .contains("author");
+    var options = new BlogPostOptions()
+        .withAuthor(authorRequested);
+    return service
+        .findAll(options)
+        .map(mapper::map);
   }
   
   @QueryMapping("findBlogPostById")

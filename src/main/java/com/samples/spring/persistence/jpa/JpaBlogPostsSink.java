@@ -5,6 +5,7 @@ import java.util.UUID;
 import java.util.stream.Stream;
 
 import com.samples.spring.domain.BlogPost;
+import com.samples.spring.domain.BlogPostOptions;
 import com.samples.spring.domain.BlogPostsSink;
 
 class JpaBlogPostsSink
@@ -12,20 +13,27 @@ class JpaBlogPostsSink
 
   private final BlogPostEntityRepository repo;
   private final BlogPostEntityMapper mapper;
+  private final JpaEntityGraphQueryBuilder queryBuilder;
   
   public JpaBlogPostsSink(
       BlogPostEntityRepository repo, 
-      BlogPostEntityMapper mapper
+      BlogPostEntityMapper mapper,
+      JpaEntityGraphQueryBuilder queryBuilder
   ) {
     super();
     this.repo = repo;
     this.mapper = mapper;
+    this.queryBuilder = queryBuilder;
   }
 
   @Override
-  public Stream<BlogPost> findAll() {
-    return repo
-        .findAll()
+  public Stream<BlogPost> findAll(BlogPostOptions options) {
+    // We build the EntityGraph dynamically here,
+    // so we could not use the repository pattern.
+    // otherwise, we could use: https://github.com/Cosium/spring-data-jpa-entity-graph
+    return queryBuilder
+        .findAllQuery(options)
+        .getResultList()
         .stream()
         .map(mapper::map);
   }
