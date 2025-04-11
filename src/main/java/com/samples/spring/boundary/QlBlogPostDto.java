@@ -8,7 +8,8 @@ public record QlBlogPostDto(
     UUID id,
     String title,
     String content,
-    ZonedDateTime created
+    ZonedDateTime created,
+    QlAuthorDto author
     
 ) {
 

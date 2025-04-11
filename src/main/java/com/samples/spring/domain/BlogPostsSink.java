@@ -16,6 +16,8 @@ public interface BlogPostsSink {
   
   void create(BlogPost newPost);
   
+  void update(BlogPost blogPost);
+
   boolean delete(UUID id);
 
   default long count() {
@@ -27,4 +29,5 @@ public interface BlogPostsSink {
     return findById(id)
         .isPresent();
   }
+
 }

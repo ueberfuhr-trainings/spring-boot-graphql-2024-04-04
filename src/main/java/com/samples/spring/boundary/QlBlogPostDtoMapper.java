@@ -5,7 +5,10 @@ import org.mapstruct.Mapping;
 
 import com.samples.spring.domain.BlogPost;
 
-@Mapper(componentModel = "spring")
+@Mapper(
+    componentModel = "spring",
+    uses = QlAuthorDtoMapper.class
+)
 public interface QlBlogPostDtoMapper {
 
   QlBlogPostDto map(BlogPost source);

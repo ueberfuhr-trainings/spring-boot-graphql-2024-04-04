@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
@@ -28,6 +29,8 @@ public class BlogPostEntity {
   private String content;
   @Column(name = "CREATION_DATE")
   private ZonedDateTime created;
+  @ManyToOne // default fetch type is eager, no cascading
+  private AuthorEntity author;
 
   @PrePersist
   void updateCreated() {
@@ -59,6 +62,12 @@ public class BlogPostEntity {
   }
   public void setCreated(ZonedDateTime created) {
     this.created = created;
+  }
+  public AuthorEntity getAuthor() {
+    return author;
+  }
+  public void setAuthor(AuthorEntity author) {
+    this.author = author;
   }
   
 }
