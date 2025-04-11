@@ -4,6 +4,11 @@ spring:
   graphql:
     graphiql:
       enabled: ${GRAPHIQL_ENABLED:false}
+  datasource:
+    url: jdbc:h2:./.local-db/customers
+  jpa:
+    hibernate:
+      ddl-auto: update
 application:
   initialization:
     enabled: true

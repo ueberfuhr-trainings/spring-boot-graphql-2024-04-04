@@ -2,6 +2,11 @@ spring:
   graphql:
     graphiql:
       enabled: true
+  jpa:
+    show-sql: true
+  h2:
+    console:
+      enabled: true
 management:
   endpoints:
     web:
