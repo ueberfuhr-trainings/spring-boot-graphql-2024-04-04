@@ -8,12 +8,28 @@ scalar DateTime
 """A constraint to the length of a string, array or collection."""
 directive @Size(min : Int = 0, max : Int = 2147483647) on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION | FIELD_DEFINITION
 
+type Author {
+
+  id: UUID!
+  firstName: String!
+  lastName: String!
+
+}
+
 type BlogPost {
 
   id: UUID!
   title: String!
   content: String!
   created: DateTime!
+  author: Author
+
+}
+
+input AuthorInput {
+
+  firstName: String! @Size(min: 1, max: 50)
+  lastName: String! @Size(min: 1, max: 50)
 
 }
 
@@ -24,7 +40,17 @@ input BlogPostInput {
 
 }
 
+input BlogPostAuthorAssignmentInput {
+
+  blogPostId: UUID!
+  authorId: UUID!
+
+}
+
 type Query {
+
+  findAllAuthors: [Author]!
+  findAuthorById(id: UUID!): Author
 
   findAllBlogPosts: [BlogPost]!
   findBlogPostById(id: UUID!): BlogPost
@@ -33,7 +59,11 @@ type Query {
 
 type Mutation {
 
+  createAuthor(input: AuthorInput): Author
+
   createBlogPost(input: BlogPostInput!): BlogPost
   deleteBlogPost(id: UUID!): Boolean!
+
+  assignAuthorToBlogPost(input: BlogPostAuthorAssignmentInput): BlogPost
 
 }
