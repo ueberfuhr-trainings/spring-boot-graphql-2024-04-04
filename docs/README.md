@@ -18,3 +18,6 @@
 
 ## Schichtenarchitektur: Onion/Clean Architecture
 ![Layers](06-layers.png)
+
+## Datenbankzugriffe
+![Database Access](07-database.png)
