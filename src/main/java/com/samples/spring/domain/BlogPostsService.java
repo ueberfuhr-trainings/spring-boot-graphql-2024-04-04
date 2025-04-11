@@ -23,9 +23,13 @@ public class BlogPostsService {
   }
 
   public Stream<BlogPost> findAll() {
-    return sink.findAll();
+    return this.findAll(new BlogPostOptions());
   }
-  
+
+  public Stream<BlogPost> findAll(BlogPostOptions options) {
+    return sink.findAll(options);
+  }
+
   public Optional<BlogPost> findById(UUID id) {
     return sink.findById(id);
   }

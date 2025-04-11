@@ -6,10 +6,12 @@ import java.util.stream.Stream;
 
 public interface BlogPostsSink {
 
-  Stream<BlogPost> findAll();
+  Stream<BlogPost> findAll(BlogPostOptions options);
 
-  default Optional<BlogPost> findById(UUID id) {
-    return findAll()
+  default Optional<BlogPost> findById(
+      UUID id
+  ) {
+    return findAll(new BlogPostOptions())
         .filter(bp -> id.equals(bp.getId()))
         .findFirst();
   }
@@ -21,7 +23,7 @@ public interface BlogPostsSink {
   boolean delete(UUID id);
 
   default long count() {
-    return findAll()
+    return findAll(new BlogPostOptions())
         .count();
   }
 
