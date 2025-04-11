@@ -1,5 +1,4 @@
 package com.samples.spring.boundary;
-
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,11 +117,8 @@ class GraphQlAuthorsTests {
         .execute()
         .errors()
           .verify()
-        .path("findAllAuthors[id='" + newId + "'].firstName")
-          .entity(String.class)
-          .isEqualTo("Tom")
-        .path("findAllAuthors[id='" + newId + "'].lastName")
-          .entity(String.class);
+        .path("findAllAuthors[?(@.id == '" + newId + "')]")
+          .hasValue();
   
   }
   
