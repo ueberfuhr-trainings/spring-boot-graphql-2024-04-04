@@ -11,7 +11,7 @@ public interface BlogPostsSink {
   default Optional<BlogPost> findById(
       UUID id
   ) {
-    return findAll(new BlogPostOptions())
+    return findAll(BlogPostOptions.builder().build())
         .filter(bp -> id.equals(bp.getId()))
         .findFirst();
   }
@@ -23,7 +23,7 @@ public interface BlogPostsSink {
   boolean delete(UUID id);
 
   default long count() {
-    return findAll(new BlogPostOptions())
+    return findAll(BlogPostOptions.builder().build())
         .count();
   }
 

@@ -4,16 +4,13 @@ import com.samples.spring.domain.BlogPostOptions;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 class JpaEntityGraphQueryBuilder {
 
   private final EntityManager em;
   
-  JpaEntityGraphQueryBuilder(EntityManager em) {
-    super();
-    this.em = em;
-  }
-
   TypedQuery<BlogPostEntity> findAllQuery(BlogPostOptions options) {
     var entityGraph = em
         .createEntityGraph(BlogPostEntity.class);

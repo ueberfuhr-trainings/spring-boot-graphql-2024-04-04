@@ -29,9 +29,11 @@ class BlogPostEventLoggerTests {
   void shouldLogOnBlogPostCreated() {
     reset(eventLogger);
     
-    var blogPost = new BlogPost();
-    blogPost.setTitle("Test-Title");
-    blogPost.setContent("Test-Content");
+    var blogPost = BlogPost
+        .builder()
+        .title("Test-Title")
+        .content("Test-Content")
+        .build();
     service.create(blogPost);
     
     // Prüfe, ob im Event der BlogPost enthalten ist
@@ -45,9 +47,11 @@ class BlogPostEventLoggerTests {
   @Test
   void shouldLogOnBlogPostDeleted() {
     
-    var blogPost = new BlogPost();
-    blogPost.setTitle("Test-Title");
-    blogPost.setContent("Test-Content");
+    var blogPost = BlogPost
+        .builder()
+        .title("Test-Title")
+        .content("Test-Content")
+        .build();
     service.create(blogPost);
 
     reset(eventLogger);

@@ -5,7 +5,13 @@ import java.util.UUID;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
+@Builder
 public class BlogPost {
 
   private UUID id;
@@ -18,42 +24,4 @@ public class BlogPost {
   private ZonedDateTime created;
   private Author author;
 
-  public static BlogPost valueOf(String title, String content) {
-    var result = new BlogPost();
-    result.setTitle(title);
-    result.setContent(content);
-    return result;
-  }
-  
-  public UUID getId() {
-    return id;
-  }
-  public void setId(UUID id) {
-    this.id = id;
-  }
-  public String getTitle() {
-    return title;
-  }
-  public void setTitle(String title) {
-    this.title = title;
-  }
-  public String getContent() {
-    return content;
-  }
-  public void setContent(String content) {
-    this.content = content;
-  }
-  public ZonedDateTime getCreated() {
-    return created;
-  }
-  public void setCreated(ZonedDateTime created) {
-    this.created = created;
-  }
-  public Author getAuthor() {
-    return author;
-  }
-  public void setAuthor(Author author) {
-    this.author = author;
-  }
-  
 }

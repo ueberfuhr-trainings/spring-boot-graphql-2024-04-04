@@ -8,7 +8,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Table(name = "AUTHORS")
 @Entity(name = "Author")
 public class AuthorEntity {
@@ -20,26 +24,5 @@ public class AuthorEntity {
   private String firstName;
   @Size(min = 1, max = 50)
   private String lastName;
-
-  public UUID getId() {
-    return id;
-  }
-  public void setId(UUID id) {
-    this.id = id;
-  }
-  public String getFirstName() {
-    return firstName;
-  }
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
-  public String getLastName() {
-    return lastName;
-  }
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
-  
-  
   
 }

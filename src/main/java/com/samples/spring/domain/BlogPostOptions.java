@@ -1,16 +1,13 @@
 package com.samples.spring.domain;
 
+import lombok.Builder;
+import lombok.Getter;
+
+@Builder
+@Getter
 public class BlogPostOptions {
-  
+
+  @Builder.Default
   private boolean author = true;
   
-  public BlogPostOptions withAuthor(boolean author) {
-    this.author = author;
-    return this;
-  }
-
-  public boolean isAuthor() {
-    return author;
-  }
-
 }

@@ -13,31 +13,24 @@ import com.samples.spring.domain.BlogPostsService;
 
 import graphql.schema.DataFetchingEnvironment;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @Controller
+@RequiredArgsConstructor
 public class QlBlogPostsController {
 
   private final BlogPostsService service;
   private final QlBlogPostDtoMapper mapper;
-  
-  public QlBlogPostsController(
-      BlogPostsService service,
-      QlBlogPostDtoMapper mapper
-  ) {
-    super();
-    this.service = service;
-    this.mapper = mapper;
-  }
-
-  // GraphQl implementation
   
   @QueryMapping("findAllBlogPosts")
   public Stream<QlBlogPostDto> findAllBlogPosts(DataFetchingEnvironment env) {
     var authorRequested = env
         .getSelectionSet()
         .contains("author");
-    var options = new BlogPostOptions()
-        .withAuthor(authorRequested);
+    var options = BlogPostOptions
+        .builder()
+        .author(authorRequested)
+        .build();
     return service
         .findAll(options)
         .map(mapper::map);

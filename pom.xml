@@ -51,6 +51,11 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
+      		<groupId>org.projectlombok</groupId>
+      		<artifactId>lombok</artifactId>
+      		<optional>true</optional>
+    		</dependency>
+    	<dependency>
 	        <groupId>org.mapstruct</groupId>
     	    <artifactId>mapstruct</artifactId>
         	<version>${mapstruct.version}</version>
@@ -82,11 +87,21 @@
 					<artifactId>maven-compiler-plugin</artifactId>
 					<configuration>
 						<annotationProcessorPaths>
+							<path>
+              					<groupId>org.projectlombok</groupId>
+              					<artifactId>lombok</artifactId>
+            				</path>
     		                <path>
             		            <groupId>org.mapstruct</groupId>
                     		    <artifactId>mapstruct-processor</artifactId>
                         		<version>${mapstruct.version}</version>
                     		</path>
+                    		<!-- Use Lombok & MapStruct together -->
+                    		<path>
+				                <groupId>org.projectlombok</groupId>
+                				<artifactId>lombok-mapstruct-binding</artifactId>
+                				<version>0.2.0</version>
+            				</path>
 		                </annotationProcessorPaths>
 					</configuration>
 				</plugin>
@@ -96,6 +111,14 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+		        	<excludes>
+            			<exclude>
+              				<groupId>org.projectlombok</groupId>
+              				<artifactId>lombok</artifactId>
+            			</exclude>
+          			</excludes>
+        		</configuration>
 			</plugin>
 		</plugins>
 	</build>

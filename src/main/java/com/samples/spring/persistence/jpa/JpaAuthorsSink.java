@@ -7,21 +7,15 @@ import java.util.stream.Stream;
 import com.samples.spring.domain.Author;
 import com.samples.spring.domain.AuthorsSink;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 class JpaAuthorsSink
   implements AuthorsSink {
 
   private final AuthorEntityRepository repo;
   private final AuthorEntityMapper mapper;
   
-  public JpaAuthorsSink(
-      AuthorEntityRepository repo, 
-      AuthorEntityMapper mapper
-  ) {
-    super();
-    this.repo = repo;
-    this.mapper = mapper;
-  }
-
   @Override
   public Stream<Author> findAll() {
     return repo

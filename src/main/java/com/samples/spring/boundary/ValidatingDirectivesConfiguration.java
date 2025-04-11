@@ -1,21 +1,19 @@
 package com.samples.spring.boundary;
 
-import graphql.validation.rules.OnValidationErrorStrategy;
-import graphql.validation.rules.ValidationRules;
-import graphql.validation.schemawiring.ValidationSchemaWiring;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.graphql.execution.RuntimeWiringConfigurer;
 
+import graphql.validation.rules.OnValidationErrorStrategy;
+import graphql.validation.rules.ValidationRules;
+import graphql.validation.schemawiring.ValidationSchemaWiring;
+import lombok.RequiredArgsConstructor;
+
 @Configuration
+@RequiredArgsConstructor
 public class ValidatingDirectivesConfiguration {
 
   private final CustomMessageInterpolator messageInterpolator;
-
-  public ValidatingDirectivesConfiguration(CustomMessageInterpolator messageInterpolator) {
-    super();
-    this.messageInterpolator = messageInterpolator;
-  }
 
   @Bean
   public RuntimeWiringConfigurer validatingDirectives() {

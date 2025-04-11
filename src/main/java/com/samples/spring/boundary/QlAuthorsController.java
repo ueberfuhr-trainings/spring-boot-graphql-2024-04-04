@@ -11,23 +11,14 @@ import org.springframework.stereotype.Controller;
 import com.samples.spring.domain.AuthorsService;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @Controller
 public class QlAuthorsController {
 
   private final AuthorsService service;
   private final QlAuthorDtoMapper mapper;
-
-  public QlAuthorsController(
-      AuthorsService service, 
-      QlAuthorDtoMapper mapper
-  ) {
-    super();
-    this.service = service;
-    this.mapper = mapper;
-  }
-  
-  // GraphQl implementation
 
   @QueryMapping("findAllAuthors")
   public Stream<QlAuthorDto> findAllAuthors() {
