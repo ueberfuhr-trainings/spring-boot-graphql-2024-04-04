@@ -35,6 +35,14 @@ public class BlogPostsService {
     sink.create(newPost);
   }
 
+  @PublishEvent(BlogPostUpdatedEvent.class)
+  public void update(@Valid BlogPost blogPost) {
+    if(!exists(blogPost.getId())) {
+      throw new BlogPostNotFoundException(blogPost.getId());
+    }
+    sink.update(blogPost);    
+  }
+
   public boolean exists(UUID id) {
     return sink.existsById(id);
   }
@@ -49,5 +57,5 @@ public class BlogPostsService {
   public long count() {
     return sink.count();
   }
-  
+
 }

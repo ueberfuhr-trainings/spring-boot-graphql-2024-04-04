@@ -42,6 +42,13 @@ class InMemoryBlogPostsSink
   }
 
   @Override
+  public void update(BlogPost blogPost) {
+    this
+      .blogPosts
+      .put(blogPost.getId(), blogPost);
+  }
+  
+  @Override
   public boolean delete(UUID id) {
     return this
         .blogPosts
@@ -61,5 +68,5 @@ class InMemoryBlogPostsSink
         .blogPosts
         .containsKey(id);
   }
-  
+
 }

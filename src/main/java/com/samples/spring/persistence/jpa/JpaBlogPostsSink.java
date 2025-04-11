@@ -45,6 +45,13 @@ class JpaBlogPostsSink
   }
 
   @Override
+  public void update(BlogPost blogPost) {
+    var entity = mapper.map(blogPost);
+    repo.save(entity);
+    mapper.copy(entity, blogPost);
+  }
+  
+  @Override
   public boolean delete(UUID id) {
     if(!repo.existsById(id)) {
       return false;

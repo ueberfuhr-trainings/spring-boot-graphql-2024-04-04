@@ -16,6 +16,7 @@ public class BlogPost {
   @Size(min = 4, max = 1000)
   private String content;
   private ZonedDateTime created;
+  private Author author;
 
   public static BlogPost valueOf(String title, String content) {
     var result = new BlogPost();
@@ -47,6 +48,12 @@ public class BlogPost {
   }
   public void setCreated(ZonedDateTime created) {
     this.created = created;
+  }
+  public Author getAuthor() {
+    return author;
+  }
+  public void setAuthor(Author author) {
+    this.author = author;
   }
   
 }

@@ -5,7 +5,10 @@ import org.mapstruct.MappingTarget;
 
 import com.samples.spring.domain.BlogPost;
 
-@Mapper(componentModel = "spring")
+@Mapper(
+    componentModel = "spring",
+    uses = AuthorEntityMapper.class
+)
 public interface BlogPostEntityMapper {
 
   BlogPostEntity map (BlogPost source);
